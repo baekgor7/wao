@@ -24,4 +24,11 @@ public class UserServiceImpl implements UserService {
 		
 		return userDAO.userIdCheck(userId);
 	}
+
+	@Override
+	public UserVO loginCheck(UserVO userVO) throws Exception {
+		
+		return userDAO.loginCheck(userVO);
+	}
+	
 }

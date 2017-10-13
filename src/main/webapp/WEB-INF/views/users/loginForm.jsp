@@ -6,7 +6,9 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SMP</title>
+<meta name="description" content="">
+<meta name="author" content="">
+<title>WAO</title>
 
 <%@include file="../include/common_js_css.jsp" %>
 
@@ -33,6 +35,9 @@ $(document).ready(function() {
 	var result = '${msg}';
 	if(result == 'SUCCESS') {
 		alert('처리가 완료되었습니다.');
+	}
+	else if(result == 'FAIL') {
+		alert('아이디 또는 비밀번호가 틀렸습니다.');
 	}
 });
 
@@ -176,6 +181,8 @@ function readyFn() {
 	</div>
 
 </div>
+
+
 
 </body>
 </html>

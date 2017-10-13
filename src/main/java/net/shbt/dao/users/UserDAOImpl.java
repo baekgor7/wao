@@ -34,8 +34,20 @@ public class UserDAOImpl implements UserDAO {
 		
 		String idVal = sqlSession.selectOne(NAMESPACE+".userIdCheck", userId);
 				
-		if(idVal == null) idFlag = true;
+		if(idVal == null) idFlag = true;	//ID가 없으면 신청가능
 		
 		return idFlag;
 	}
+
+	@Override
+	public UserVO loginCheck(UserVO userVO) throws Exception {		
+		
+		UserVO test = sqlSession.selectOne(NAMESPACE+".loginCheck", userVO);
+		if(test != null) {
+			System.out.println("test=============="+test.toString()); 
+		}
+		
+		return test;
+	}
+	
 }

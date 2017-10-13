@@ -1,6 +1,7 @@
 package net.shbt.web.users;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,9 +59,19 @@ public class UserController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/login")
-	public String login(UserVO userVO) {
+	public String login(UserVO userVO, RedirectAttributes rttr, HttpSession session) throws Exception {
 		
 		logger.info("login : userVO=="+userVO);
+		
+		UserVO loginUser = userService.loginCheck(userVO);
+		
+		if(loginUser == null) {	//데이터가 없으면
+			rttr.addFlashAttribute("msg", "FAIL");
+			return "redirect:/users/loginForm";
+		}
+		
+		session.setAttribute("sessionedUserId", loginUser.getUserId());
+		session.setAttribute("sessionedUserNm", loginUser.getUserNm());
 		
 		return "/main";
 	}

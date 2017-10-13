@@ -20,6 +20,13 @@
     	  FROM TBL_USER
     	 WHERE USER_ID = #{userId}
     </select>
+    
+    <select id="loginCheck" resultType="net.shbt.domain.users.UserVO" parameterType="net.shbt.domain.users.UserVO">
+    	SELECT USER_ID, USER_NM
+    	  FROM TBL_USER
+    	 WHERE USER_ID = #{userId}
+    	   AND PASSWORD = #{password}
+    </select>    
 
 </mapper>
 

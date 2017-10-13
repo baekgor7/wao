@@ -6,7 +6,9 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SMP</title>
+<meta name="description" content="">
+<meta name="author" content="">
+<title>WAO</title>
 
 <%@include file="../include/common_js_css.jsp" %>
 
@@ -63,7 +65,7 @@ function fnValidate() {
                 required : true,
                 minlength : 3,
 				maxlength: 20,
-                equalTo : password
+                equalTo : '#password'
             }
 		},
 		//규칙체크 실패시 출력될 메세지
@@ -100,11 +102,16 @@ function fnValidate() {
 		submitHandler: function() {
 			var f = confirm('등록하시겠습니까?');
 			if(f) {
+				alert(1);
 				//비밀번호 암호화
 				var hash = CryptoJS.SHA256($('#password').val());
+				alert(2);
 				$('#encPw').val(hash.toString(CryptoJS.enc.Base64));
+				alert(3);
 				$('#password').val('');					//pw값 없애기
+				alert(4);
 				$('#password_confirmation').val('');	//pw값 없애기
+				alert(5);
 				
 				return true;
 			} else {
