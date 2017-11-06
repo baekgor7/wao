@@ -22,6 +22,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<beans:bean id="loginInterceptor" class="net.shbt.interceptor.LoginInterceptor" />
+	<interceptors>
+		<interceptor>
+			<mapping path="/users/login" />
+			<beans:ref bean="loginInterceptor" />
+		</interceptor>
+	</interceptors>
+	
 	<context:component-scan base-package="net.shbt.web" />	
 	
 </beans:beans>

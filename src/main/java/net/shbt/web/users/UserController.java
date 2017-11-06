@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +25,12 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET, value="/loginForm")
-	public String loginForm() {
+	public String loginForm(HttpSession session) {
+		
+		Object obj = session.getAttribute("login");
+		if(obj != null) {
+			return "/main";
+		}
 		
 		return "/users/loginForm";
 	}
@@ -59,20 +65,32 @@ public class UserController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/login")
-	public String login(UserVO userVO, RedirectAttributes rttr, HttpSession session) throws Exception {
+	public String login(String userId, String password, RedirectAttributes rttr, Model model) throws Exception {
 		
-		logger.info("login : userVO=="+userVO);
+		logger.info("login : userId=="+userId);
+		logger.info("login : password=="+password);
 		
-		UserVO loginUser = userService.loginCheck(userVO);
+		UserVO userVO = userService.loginCheck(userId, password);
 		
-		if(loginUser == null) {	//데이터가 없으면
+		if(userVO == null) {	//데이터가 없으면
 			rttr.addFlashAttribute("msg", "FAIL");
 			return "redirect:/users/loginForm";
-		}
+		}	
 		
-		session.setAttribute("sessionedUserId", loginUser.getUserId());
-		session.setAttribute("sessionedUserNm", loginUser.getUserNm());
+		//로그인 성공시
+		model.addAttribute("userVO", userVO);
 		
 		return "/main";
+	}
+	
+	@RequestMapping(value="logout")
+	public String logout(HttpSession session) {
+		
+		Object obj = session.getAttribute("login");
+		if(obj != null) {
+			session.removeAttribute("login");
+			session.invalidate();
+		}
+		return "redirect:/";
 	}
 }

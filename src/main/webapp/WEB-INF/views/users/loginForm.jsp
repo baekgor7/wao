@@ -22,6 +22,8 @@
 <script type="text/javascript" src="/js/crypto/aes.js"></script>
 <script type="text/javascript" src="/js/crypto/sha256.js"></script>
 
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -31,6 +33,9 @@ $(document).ready(function() {
 	
 	//회원가입 전 유효성 체크 셋팅
 	fnValidate();
+	
+	//쿠키 아이디 가져오기
+	fnGetId();
 	
 	var result = '${msg}';
 	if(result == 'SUCCESS') {
@@ -78,10 +83,33 @@ function fnValidate() {
 			var hash = CryptoJS.SHA256($('#password').val());
 			$('#password').val(hash.toString(CryptoJS.enc.Base64));
 			
+			//아이디 쿠키 셋팅
+			fnSaveId();
+			
 			form.action = '/users/login';
 			form.submit();
 		}
 	});	
+}
+
+function fnSaveId() {
+	
+	if($('#remember_me').is(':checked')) {
+		$.cookie('wao_id', $('#userId').val(), {expires: 7});	//7일
+	}
+	else {
+		$.removeCookie('wao_id');	//쿠기삭제
+	}	
+}
+
+function fnGetId() {
+	
+	var id = $.cookie('wao_id');
+
+	if(id != 'undefined') {
+		$('#userId').val(id);
+		$('#remember_me').attr('checked', true);
+	}
 }
 
 //bootstrap login script
@@ -151,7 +179,6 @@ function readyFn() {
 	<div class="row" style="margin-top:20px">
 	    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 			<form role="form" name="frm" id="frm" method="post" onsubmit="return false">
-				<input type="hidden" name="encPw" id="encPw" />
 				<fieldset>
 					<h2>Please Sign In</h2>
 					<hr class="colorgraph" />

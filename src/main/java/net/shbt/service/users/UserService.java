@@ -8,5 +8,5 @@ public interface UserService {
 	
 	public boolean userIdCheck(String userId) throws Exception;
 	
-	public UserVO loginCheck(UserVO userVO) throws Exception;
+	public UserVO loginCheck(String userId, String password) throws Exception;
 }

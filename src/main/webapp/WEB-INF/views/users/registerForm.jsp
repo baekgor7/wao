@@ -102,16 +102,11 @@ function fnValidate() {
 		submitHandler: function() {
 			var f = confirm('등록하시겠습니까?');
 			if(f) {
-				alert(1);
 				//비밀번호 암호화
 				var hash = CryptoJS.SHA256($('#password').val());
-				alert(2);
 				$('#encPw').val(hash.toString(CryptoJS.enc.Base64));
-				alert(3);
 				$('#password').val('');					//pw값 없애기
-				alert(4);
 				$('#password_confirmation').val('');	//pw값 없애기
-				alert(5);
 				
 				return true;
 			} else {

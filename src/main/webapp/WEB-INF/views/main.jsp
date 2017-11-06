@@ -21,7 +21,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
 			
-			<%@include file="./include/top.jsp" %>
+			<%@include file="./include/header.jsp" %>
 			
 			<%@include file="./include/left.jsp" %>
         </nav>

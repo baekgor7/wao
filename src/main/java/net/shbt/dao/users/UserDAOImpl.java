@@ -1,5 +1,8 @@
 package net.shbt.dao.users;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -40,14 +43,13 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public UserVO loginCheck(UserVO userVO) throws Exception {		
+	public UserVO loginCheck(String userId, String password) throws Exception {		
 		
-		UserVO test = sqlSession.selectOne(NAMESPACE+".loginCheck", userVO);
-		if(test != null) {
-			System.out.println("test=============="+test.toString()); 
-		}
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("userId", userId);
+		paramMap.put("password", password);
 		
-		return test;
+		return sqlSession.selectOne(NAMESPACE+".loginCheck", paramMap);
 	}
 	
 }

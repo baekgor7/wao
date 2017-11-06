@@ -9,22 +9,22 @@
     
     <insert id="register" parameterType="net.shbt.domain.users.UserVO">
 		INSERT INTO TBL_USER (
-			USER_ID, PASSWORD, USER_NM, WDATE, USE_YN, EMAIL
+			USERID, PASSWORD, USERNM, WDATE, USE_YN, EMAIL
 		) VALUES (
 			#{userId}, #{password}, #{userNm}, NOW(), 'Y', #{email}
 		)
     </insert>
     
     <select id="userIdCheck" resultType="string">
-    	SELECT USER_ID
+    	SELECT USERID
     	  FROM TBL_USER
-    	 WHERE USER_ID = #{userId}
+    	 WHERE USERID = #{userId}
     </select>
     
-    <select id="loginCheck" resultType="net.shbt.domain.users.UserVO" parameterType="net.shbt.domain.users.UserVO">
-    	SELECT USER_ID, USER_NM
+    <select id="loginCheck" resultType="net.shbt.domain.users.UserVO">
+    	SELECT USERID, USERNM
     	  FROM TBL_USER
-    	 WHERE USER_ID = #{userId}
+    	 WHERE USERID = #{userId}
     	   AND PASSWORD = #{password}
     </select>    
 

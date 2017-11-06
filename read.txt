@@ -1,0 +1,21 @@
+shbt
+
+CREATE TABLE `tbl_user` (
+  `USERID` varchar(20) NOT NULL,
+  `PASSWORD` varchar(50) DEFAULT NULL,
+  `USERNM` varchar(50) DEFAULT NULL,
+  `WDATE` datetime DEFAULT NULL,
+  `UDATE` datetime DEFAULT NULL,
+  `USE_YN` varchar(1) DEFAULT NULL,
+  `EMAIL` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`USERID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='사용자';
+
+
+CREATE TABLE `tbl_usr_login_info` (
+  `USER_ID` varchar(20) NOT NULL,
+  `LOGIN_DDTM` datetime NOT NULL,
+  `LOGOUT_DDTM` datetime DEFAULT NULL,
+  `USER_IP_ADDR` varchar(15) NOT NULL,
+  PRIMARY KEY (`USER_ID`,`LOGIN_DDTM`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='사용자로그인정보';
