@@ -1,6 +1,7 @@
 package net.shbt.web.users;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -65,12 +66,13 @@ public class UserController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/login")
-	public String login(String userId, String password, RedirectAttributes rttr, Model model) throws Exception {
+	public String login(String userId, String password, RedirectAttributes rttr, Model model, HttpServletRequest request) throws Exception {
 		
 		logger.info("login : userId=="+userId);
 		logger.info("login : password=="+password);
-		
-		UserVO userVO = userService.loginCheck(userId, password);
+		logger.info("login : ipAddr=="+request.getRemoteAddr());
+				
+		UserVO userVO = userService.login(userId, password, request.getRemoteAddr());
 		
 		if(userVO == null) {	//데이터가 없으면
 			rttr.addFlashAttribute("msg", "FAIL");

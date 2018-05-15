@@ -16,6 +16,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 	private static final String LOGIN = "login";
 	
+	//컨트롤러에 들어가기 전에 먼저 실행
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		
@@ -25,9 +26,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			session.removeAttribute(LOGIN);
 		}
 		
-		return true;
+		return true;	//트루라고 명시해줘야 요청페이지로 이동하고 post로 이동할 수 있다
 	}
 	
+	//컨트롤러와 뷰 사이에 실행
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		

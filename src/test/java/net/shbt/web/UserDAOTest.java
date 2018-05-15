@@ -31,7 +31,7 @@ public class UserDAOTest {
 	public void test3() throws Exception {
 		
 		UserVO userVO = new UserVO();
-		userVO.setUserId("fdsa1");
+		userVO.setUserId("fdsa3");
 		userVO.setPassword("!1q2w3e4r");
 		userVO.setUserNm("홍길동");
 		userVO.setEmail("test@test.com");

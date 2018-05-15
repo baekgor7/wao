@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="net.shbt.sql.board01">
+
+    <select id="list" resultType="net.shbt.domain.boards.Board01VO">
+    	SELECT BNO, TITLE, CONTENTS, WRITER, WDATE, UDATE, VIEWCNT 
+    	  FROM TBL_BOARD 
+    	 WHERE BOARD_GUBUN = '01' 
+    	 ORDER BY BNO DESC
+    	 LIMIT #{pageStart}, #{perPageNum};
+    </select>
+    
+    <select id="listCount" resultType="int">
+    	SELECT COUNT(BNO) 
+    	  FROM TBL_BOARD
+    	 WHERE BOARD_GUBUN = '01' 
+    </select>    
+    
+    <select id="bnoSelect" resultType="int">
+    	SELECT IFNULL(MAX(BNO), 0) + 1 FROM TBL_BOARD
+    </select>
+    
+    <insert id="create">
+		INSERT INTO TBL_BOARD (
+			BNO, BOARD_GUBUN, TITLE, CONTENTS, WDATE, WRITER
+		) VALUES (
+			#{bno},
+			'01',
+			#{title},
+			#{contents},
+			NOW(),
+			#{writer}
+		)
+    </insert>
+
+
+</mapper>
+

@@ -45,11 +45,20 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserVO loginCheck(String userId, String password) throws Exception {		
 		
-		Map<String, Object> paramMap = new HashMap<>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", userId);
 		paramMap.put("password", password);
 		
 		return sqlSession.selectOne(NAMESPACE+".loginCheck", paramMap);
+	}
+	
+	@Override
+	public void loginInfoInsert(String userId, String ipAddr) throws Exception {
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userId", userId);
+		paramMap.put("ipAddr", ipAddr);
+		
+		sqlSession.insert(NAMESPACE+".loginInfoInsert", paramMap);
 	}
 	
 }

@@ -7,7 +7,7 @@
 		SELECT NOW()
 	</select>
     
-    <insert id="register" parameterType="net.shbt.domain.users.UserVO">
+    <insert id="register">
 		INSERT INTO TBL_USER (
 			USERID, PASSWORD, USERNM, WDATE, USE_YN, EMAIL
 		) VALUES (
@@ -26,7 +26,15 @@
     	  FROM TBL_USER
     	 WHERE USERID = #{userId}
     	   AND PASSWORD = #{password}
-    </select>    
+    </select> 
+    
+    <insert id="loginInfoInsert">
+		INSERT INTO TBL_USR_LOGIN_INFO (
+			USERID, LOGIN_DDTM, USER_IP_ADDR
+		) VALUES (
+			#{userId}, NOW(), #{ipAddr}
+		)
+    </insert>
 
 </mapper>
 

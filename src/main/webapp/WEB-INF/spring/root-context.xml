@@ -33,7 +33,14 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
 	<!-- spring 실행시 net.shbt.dao package를 확인 -->	
 	<context:component-scan base-package="net.shbt.dao" />
 	<context:component-scan base-package="net.shbt.service" />
+	
+	<!-- 클래스와 메소드에 @Transactional 애노테이션을 사용  -->
+	<tx:annotation-driven/>
 </beans>

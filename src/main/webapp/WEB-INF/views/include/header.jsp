@@ -15,7 +15,7 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">샘플게시판</a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#">게시판1(기본)</a>
+                            <a href="/boards/board01/list">게시판1(기본)</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -27,6 +27,10 @@
 			</ul>
 			
             <ul class="nav navbar-top-links navbar-right">
+            	<li class="list-unstyled">
+   					<span>4:59</span>
+   					<button type="button" class="btn btn-info btn-xs">연장</button>
+            	</li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>

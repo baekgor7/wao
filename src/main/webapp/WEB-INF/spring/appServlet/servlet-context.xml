@@ -30,6 +30,7 @@
 		</interceptor>
 	</interceptors>
 	
+	<!-- <annotation-driven />과 같이 결합하여 해당 패키지의 어노테이션 처리가 된 컨트롤러를 작성만 해주면 자동으로 인식 -->
 	<context:component-scan base-package="net.shbt.web" />	
 	
 </beans:beans>

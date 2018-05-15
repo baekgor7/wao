@@ -11,4 +11,6 @@ public interface UserDAO {
 	public boolean userIdCheck(String userId) throws Exception;
 	
 	public UserVO loginCheck(String userId, String password) throws Exception;
+	
+	public void loginInfoInsert(String userId, String ipAddr) throws Exception;
 }

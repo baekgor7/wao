@@ -13,9 +13,23 @@ CREATE TABLE `tbl_user` (
 
 
 CREATE TABLE `tbl_usr_login_info` (
-  `USER_ID` varchar(20) NOT NULL,
+  `USERID` varchar(20) NOT NULL,
   `LOGIN_DDTM` datetime NOT NULL,
   `LOGOUT_DDTM` datetime DEFAULT NULL,
   `USER_IP_ADDR` varchar(15) NOT NULL,
-  PRIMARY KEY (`USER_ID`,`LOGIN_DDTM`)
+  PRIMARY KEY (`USERID`,`LOGIN_DDTM`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='사용자로그인정보';
+
+
+CREATE TABLE `tbl_board` (
+  `BNO` int(11) NOT NULL,
+  `BOARD_GUBUN` varchar(2) NOT NULL,
+  `TITLE` varchar(200) DEFAULT NULL,
+  `CONTENTS` text,
+  `WRITER` varchar(20) DEFAULT NULL,
+  `WDATE` datetime DEFAULT NULL,
+  `UDATE` datetime DEFAULT NULL,
+  `VIEWCNT` int(11) DEFAULT '0',
+  PRIMARY KEY (`BNO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='게시판';
+
