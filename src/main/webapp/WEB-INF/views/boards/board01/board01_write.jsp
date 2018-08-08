@@ -13,14 +13,64 @@
 
 <%@include file="./../../include/common_js_css.jsp" %>
 
-<%@include file="./../../include/morris_charts_js_css.jsp" %>
+<!-- validate -->
+<script type="text/javascript" src="/js/validate/jquery.validate.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	$('#list').on('click', function() {
 		self.location = 'list';
 	});
+	
 });
+
+//등록 전 유효성 체크
+function fnValidate() {
+	
+	$('#frm').validate({		
+		//규칙
+		rules: {
+			title: {
+				required: true,
+				maxlength: 50
+			},
+			contents: {
+				required: true
+			}
+		},
+		//규칙체크 실패시 출력될 메세지
+		messages: {
+			title: {
+				required: '필수로 입력하세요',
+				maxlength: '최대 {50}글자이하로 작성하세요'
+			},
+			contents: {
+				required: '필수로 입력하세요'
+			}
+		},
+		//validation이 끝난 이후의 submit 직전 실행
+		submitHandler: function() {
+			var f = confirm('처리하시겠습니까?');
+			if(f) {				
+				return true;
+			} else {
+				return false;
+			}
+		}
+	});	
+}
+
+function fnWrite() {	
+	
+	//등록 전 유효성 체크 셋팅
+	fnValidate();
+	
+	$('#frm').attr('action','write');
+	$('#frm').attr('method','post');
+	$('#frm').attr('onsubmit','');
+	$('#frm').submit();
+}
 </script>
 
 </head>
@@ -51,14 +101,14 @@ $(document).ready(function() {
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-							<form role="form">
+							<form role="form" name="frm" id="frm" method="post" onsubmit="return false">
 								<div class="form-group">
 									<label for="title">제목</label>
 									<input class="form-control" name="title" id="title" placeholder="제목을 입력하세요" />
 								</div>
 								<div class="form-group">
 									<label>작성자</label>
-									<input class="form-control" value="${login.userId}" disabled />
+									<input class="form-control" name="writer" id="writer" value="${login.userId}" readonly />
 								</div>
 								<div class="form-group">
 									<label for="contents">내용</label>
@@ -71,7 +121,7 @@ $(document).ready(function() {
                     <!-- /.panel -->
                     
                     <div class="text-right">
-                    	<button type="button" id="register" class="btn btn-primary btn-sm">등록</button>
+                    	<button type="button" id="write" class="btn btn-primary btn-sm" onclick="javascript:fnWrite();">등록</button>
                     	<button type="button" id="list" class="btn btn-primary btn-sm">목록</button>
                     </div>
                 </div>

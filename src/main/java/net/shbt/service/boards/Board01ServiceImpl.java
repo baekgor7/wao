@@ -28,4 +28,30 @@ public class Board01ServiceImpl implements Board01Service {
 		return board01DAO.listCount(paging);
 	}
 
+	@Override
+	public void write(Board01VO board01VO) throws Exception {
+		
+		board01DAO.write(board01VO);
+	}
+
+	@Override
+	public Board01VO view(int bno) throws Exception {
+		
+		return board01DAO.view(bno);
+	}
+
+	@Override
+	public void update(Board01VO board01VO) throws Exception {
+		
+		board01DAO.update(board01VO);		
+	}
+
+	@Override
+	public void delete(int bno) throws Exception {
+		
+		board01DAO.delete(bno);
+	}
+	
+	
+
 }

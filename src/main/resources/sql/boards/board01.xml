@@ -21,7 +21,7 @@
     	SELECT IFNULL(MAX(BNO), 0) + 1 FROM TBL_BOARD
     </select>
     
-    <insert id="create">
+    <insert id="write">
 		INSERT INTO TBL_BOARD (
 			BNO, BOARD_GUBUN, TITLE, CONTENTS, WDATE, WRITER
 		) VALUES (
@@ -33,7 +33,28 @@
 			#{writer}
 		)
     </insert>
-
+    
+    <select id="view" resultType="net.shbt.domain.boards.Board01VO">
+    	SELECT BNO, TITLE, CONTENTS, WRITER, WDATE, UDATE, VIEWCNT 
+    	  FROM TBL_BOARD 
+    	 WHERE BOARD_GUBUN = '01' 
+    	   AND BNO = #{bno}
+    </select>
+    
+	<update id="update">
+		UPDATE TBL_BOARD
+		   SET TITLE = #{title},
+		       CONTENTS = #{contents},
+		       UDATE = NOW()
+		 WHERE BOARD_GUBUN = '01'
+		   AND BNO = #{bno}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM TBL_BOARD
+		 WHERE BOARD_GUBUN = '01'
+		   AND BNO = #{bno}
+	</delete>
 
 </mapper>
 

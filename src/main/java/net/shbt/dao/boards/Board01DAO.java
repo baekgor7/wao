@@ -13,5 +13,11 @@ public interface Board01DAO {
 	
 	public int bnoSelect() throws Exception;
 
-	public void create(Board01VO board01VO) throws Exception;	
+	public void write(Board01VO board01VO) throws Exception;
+	
+	public Board01VO view(int bno) throws Exception;
+	
+	public void update(Board01VO board01VO) throws Exception;
+	
+	public void delete(int bno) throws Exception;
 }

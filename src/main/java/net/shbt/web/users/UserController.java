@@ -1,6 +1,7 @@
 package net.shbt.web.users;
 
 import javax.inject.Inject;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import net.shbt.domain.users.UserVO;
 import net.shbt.service.users.UserService;
@@ -21,14 +23,15 @@ import net.shbt.service.users.UserService;
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final String LOGIN = "login";
 	
 	@Inject
 	private UserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET, value="/loginForm")
-	public String loginForm(HttpSession session) {
+	public String loginForm(HttpSession session, HttpServletRequest request) {
 		
-		Object obj = session.getAttribute("login");
+		Object obj = session.getAttribute(LOGIN);
 		if(obj != null) {
 			return "/main";
 		}
@@ -77,10 +80,13 @@ public class UserController {
 		if(userVO == null) {	//데이터가 없으면
 			rttr.addFlashAttribute("msg", "FAIL");
 			return "redirect:/users/loginForm";
+		} else {
+			//로그인 성공시 세션을 생성함
+			HttpSession session = request.getSession();
+			logger.info("==Login Session Create==");
+			userVO.setPassword("");	//비밀번호는 빈값으로 변경
+			session.setAttribute(LOGIN, userVO);
 		}	
-		
-		//로그인 성공시
-		model.addAttribute("userVO", userVO);
 		
 		return "/main";
 	}

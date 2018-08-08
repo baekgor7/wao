@@ -41,11 +41,29 @@ public class Board01DAOImpl implements Board01DAO {
 	}
 	
 	@Override
-	public void create(Board01VO board01VO) throws Exception {
+	public void write(Board01VO board01VO) throws Exception {
 		
-		sqlSession.insert(NAMESPACE + ".create", board01VO);
+		board01VO.setBno(bnoSelect());
+		sqlSession.insert(NAMESPACE + ".write", board01VO);
 	}
 
+	@Override
+	public Board01VO view(int bno) throws Exception {
+		
+		return sqlSession.selectOne(NAMESPACE + ".view", bno);
+	}
+
+	@Override
+	public void update(Board01VO board01VO) throws Exception {
+		
+		sqlSession.update(NAMESPACE + ".update", board01VO);
+	}
+
+	@Override
+	public void delete(int bno) throws Exception {
+		
+		sqlSession.delete(NAMESPACE + ".delete", bno);
+	}
 
 	
 }

@@ -13,12 +13,22 @@
 
 <%@include file="./../../include/common_js_css.jsp" %>
 
-<%@include file="./../../include/morris_charts_js_css.jsp" %>
+<!-- S : 달력 -->
+<link rel="stylesheet" href="/css/jquery-ui.css">
+<script src="/js/jquery-ui.js"></script>
+<!-- E : 달력 -->
+
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#registerForm').on("click", function(event) {
-		self.location = "registerForm";
+	$('#writeForm').on("click", function(event) {
+		self.location = "writeForm";
+	});
+	
+	$('#search').on("click", function() {
+		$('#frm').attr("method","get");
+		$('#frm').attr("action","/boards/board01/list");
+		$('#frm').submit();
 	});
 	
 	var result = '${msg}';
@@ -26,7 +36,30 @@ $(document).ready(function() {
 	if(result === 'SUCCESS') {
 		alert('처리가 완료되었습니다.');
 	}
+	
+	fn_calendar_init('fromDate');	
+	fn_calendar_init('toDate');	
 });
+
+//달력셋팅
+function fn_calendar_init(obj_id) {
+	$("#" + obj_id).datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+        changeYear : true,
+        nextText: '다음 달',
+        prevText: '이전 달',
+        //dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        //monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        showMonthAfterYear: true,
+        showOtherMonths: true,
+        showButtonPanel: true,
+      	selectOtherMonths: true,
+      	closeText: "닫기",
+      	currentText: "오늘"
+	});
+}
+
 </script>
 
 </head>
@@ -47,9 +80,36 @@ $(document).ready(function() {
                     <h1 class="page-header">게시판1(기본)</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>        
-
+            </div>   
+            
             <div class="row">
+            	<div class="col-lg-12">
+	            	<form class="form-horizontal" role="form" id="frm" name="frm">
+						<div class="form-group">
+							<label for="title" class="col-sm-1 control-label">제목</label>
+							<div class="col-sm-5">
+								<input type="text" class="form-control" id="title" name="title" />
+							</div>
+							<div class="col-sm-1">
+								<button type="button" id="search" name="search" class="btn btn-default">조회</button>
+							</div>								
+						</div> 
+						<div class="form-group">
+							<label for="fromDate" class="col-sm-1 control-label">등록일</label>								
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="fromDate" name="fromDate" maxlength="10" />
+							</div>
+							<div class="col-sm-1 text-center form-control-static">~</div>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="toDate" name="toDate" maxlength="10" />
+							</div>
+						</div>
+	            	</form>     
+
+            	</div>
+            </div>  
+
+            <div class="row">            
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -65,7 +125,7 @@ $(document).ready(function() {
                                             <th style="text-align: center;">제목</th>
                                             <th style="width: 15%; text-align: center;">등록자</th>
                                             <th style="width: 15%; text-align: center;">등록일</th>
-                                            <th style="width: 10%; text-align: center;">조회수</th>
+                                            <th style="width: 10%; text-align: center;">첨부파일</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -75,10 +135,10 @@ $(document).ready(function() {
                                             <td style="text-align: center;">
                                             	${pageMaker.totalCount - ((pageMaker.paging.page - 1) * pageMaker.paging.perPageNum + status.index)}
                                             </td>
-                                            <td>${list.title}</td>
+                                            <td><a href="/boards/board01/view${pageMaker.makeQuery(pageMaker.paging.page)}&bno=${list.bno}">${list.title} [${list.viewCnt}]</a></td>
                                             <td style="text-align: center;">${list.writer}</td>
                                             <td style="text-align: center;"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.wDate}" /></td>
-                                            <td style="text-align: center;">${list.viewCnt}</td>
+                                            <td style="text-align: center;"></td>
                                         </tr>                                    
                                     </c:forEach>
 
@@ -88,7 +148,7 @@ $(document).ready(function() {
                             <!-- /.table-responsive -->
                             
                             <div class="text-right">
-                            	<button type="button" id="registerForm" class="btn btn-primary btn-sm">등록</button>
+                            	<button type="button" id="writeForm" class="btn btn-primary btn-sm">등록</button>
                             </div>
                             
 	                        <div class="box-footer">
@@ -103,9 +163,9 @@ $(document).ready(function() {
 			                                </li>
 			                            </c:forEach>
 			
-			                        <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-			                            <li><a href="list${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a> </li>
-			                        </c:if>
+			                        	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+			                            	<li><a href="list${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a> </li>
+			                        	</c:if>
 			                        </ul>
 			                    </div>
 			                </div>
