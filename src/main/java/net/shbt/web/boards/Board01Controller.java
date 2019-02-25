@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import net.shbt.domain.boards.Board01VO;
 import net.shbt.domain.boards.PageMaker;
 import net.shbt.domain.boards.Paging;
+import net.shbt.domain.boards.SearchPaging;
 import net.shbt.interceptor.Auth;
 import net.shbt.interceptor.Auth.Role;
 import net.shbt.service.boards.Board01Service;
@@ -31,13 +32,14 @@ public class Board01Controller {
 	//게시판 목록
 	@Auth(role=Role.USER)	//또는 @Auth라고 써도 됨 default라.. 다른값은(@Auth(role=Role.ADMIN) --> 이건 미구현)
 	@RequestMapping(method=RequestMethod.GET, value="/list")
-	public String list(@ModelAttribute("paging") Paging paging, Model model) throws Exception {
+	public String list(@ModelAttribute("paging") SearchPaging searchPaging, Model model) throws Exception {
 		
-		model.addAttribute("list", board01Service.list(paging));	//게시판 목록 데이터
+		logger.info("searchPaging.toString=============="+searchPaging.toString());
+		model.addAttribute("list", board01Service.list(searchPaging));	//게시판 목록 데이터
 		
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setPaging(paging);
-		pageMaker.setTotalCount(board01Service.listCount(paging));
+		pageMaker.setPaging(searchPaging);
+		pageMaker.setTotalCount(board01Service.listCount(searchPaging));
 		
 		model.addAttribute("pageMaker", pageMaker);
 		

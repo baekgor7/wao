@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import net.shbt.domain.boards.Board01VO;
 import net.shbt.domain.boards.Paging;
+import net.shbt.domain.boards.SearchPaging;
 
 @Repository
 public class Board01DAOImpl implements Board01DAO {
@@ -23,9 +24,9 @@ public class Board01DAOImpl implements Board01DAO {
 	private static final String NAMESPACE = "net.shbt.sql.board01";
 
 	@Override
-	public List<Board01VO> list(Paging paging) throws Exception {
+	public List<Board01VO> list(SearchPaging searchPaging) throws Exception {
 		
-		return sqlSession.selectList(NAMESPACE + ".list", paging);
+		return sqlSession.selectList(NAMESPACE + ".list", searchPaging);
 	}	
 
 	@Override

@@ -4,10 +4,11 @@ import java.util.List;
 
 import net.shbt.domain.boards.Board01VO;
 import net.shbt.domain.boards.Paging;
+import net.shbt.domain.boards.SearchPaging;
 
 public interface Board01Service {
 
-	public List<Board01VO> list(Paging paging) throws Exception;
+	public List<Board01VO> list(SearchPaging searchPaging) throws Exception;
 	
 	public int listCount(Paging paging) throws Exception;
 	

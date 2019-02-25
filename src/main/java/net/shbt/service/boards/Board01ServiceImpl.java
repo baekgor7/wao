@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import net.shbt.dao.boards.Board01DAO;
 import net.shbt.domain.boards.Board01VO;
 import net.shbt.domain.boards.Paging;
+import net.shbt.domain.boards.SearchPaging;
 
 @Service
 public class Board01ServiceImpl implements Board01Service {
@@ -17,9 +18,9 @@ public class Board01ServiceImpl implements Board01Service {
 	private Board01DAO board01DAO;
 	
 	@Override
-	public List<Board01VO> list(Paging paging) throws Exception {
+	public List<Board01VO> list(SearchPaging searchPaging) throws Exception {
 		
-		return board01DAO.list(paging);
+		return board01DAO.list(searchPaging);
 	}
 
 	@Override

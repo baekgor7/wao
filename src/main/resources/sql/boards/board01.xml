@@ -7,6 +7,15 @@
     	SELECT BNO, TITLE, CONTENTS, WRITER, WDATE, UDATE, VIEWCNT 
     	  FROM TBL_BOARD 
     	 WHERE BOARD_GUBUN = '01' 
+    	 
+    	 <if test="title != null">
+    	 AND TITLE LIKE '#{title}'
+    	 </if>
+    	 
+    	 <if test="fromDate != null and toDate != null">
+    	 AND (WDATE >= '#{fromDate}' AND WDATE <= '#{toDate}')
+    	 </if>
+    	 
     	 ORDER BY BNO DESC
     	 LIMIT #{pageStart}, #{perPageNum};
     </select>
